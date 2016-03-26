@@ -14,6 +14,8 @@ task1.cpp- In line 18, address of a picture is given, all the faces are then det
 line 18:
 img = imread("oscarSelfie.jpg", CV_LOAD_IMAGE_UNCHANGED);
 here give the address of the image in your computer and then run the program.
+it will look like:-
+img = imread("c:/users/path/to/file", CV_LOAD_IMAGE_UNCHANGED);
 
 
 All other details have been provided in the form of comments.
