@@ -1,3 +1,22 @@
+/*
+ * Copyright (c) 2011. Philipp Wagner <bytefish[at]gmx[dot]de>.
+ * Released to public domain under terms of the BSD Simplified license.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *   * Redistributions of source code must retain the above copyright
+ *     notice, this list of conditions and the following disclaimer.
+ *   * Redistributions in binary form must reproduce the above copyright
+ *     notice, this list of conditions and the following disclaimer in the
+ *     documentation and/or other materials provided with the distribution.
+ *   * Neither the name of the organization nor the names of its contributors
+ *     may be used to endorse or promote products derived from this software
+ *     without specific prior written permission.
+ *
+ *   See <http://www.opensource.org/licenses/bsd-license>
+ */
+// code has been taken from http://docs.opencv.org/2.4/modules/contrib/doc/facerec/facerec_tutorial.html
+// some modifications have been done to suit our requirements.
 #include "opencv2/core/core.hpp"
 #include "opencv2/contrib/contrib.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -9,24 +28,8 @@
 using namespace cv;
 using namespace std;
 
-static Mat norm_0_255(InputArray _src) {
-    Mat src = _src.getMat();
-    // Create and return normalized image:
-    Mat dst;
-    switch(src.channels()) {
-    case 1:
-        cv::normalize(_src, dst, 0, 255, NORM_MINMAX, CV_8UC1);
-        break;
-    case 3:
-        cv::normalize(_src, dst, 0, 255, NORM_MINMAX, CV_8UC3);
-        break;
-    default:
-        src.copyTo(dst);
-        break;
-    }
-    return dst;
-}
 
+// reads a csv file and prepares the arrays of training data.
 static void read_csv(const string& filename, vector<Mat>& images, vector<int>& labels, char separator = ';') {
     std::ifstream file(filename.c_str(), ifstream::in);
     if (!file) {
@@ -72,15 +75,11 @@ int main() {
         string error_message = "This demo needs at least 2 images to work. Please add more images to your data set!";
         CV_Error(CV_StsError, error_message);
     }
-    // Get the height from the first image. We'll need this
-    // later in code to reshape the images to their original
-    // size:
-    int height = images[0].rows;
+
 
     Ptr<FaceRecognizer> model = createFisherFaceRecognizer();
     model->train(images, labels);
-    // The following line predicts the label of a given
-    // test image:
+    // change the name of the xml file.
     model->save("faces_trained.xml");
 
 
