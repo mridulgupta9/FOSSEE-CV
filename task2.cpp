@@ -3,7 +3,8 @@
 #include <iostream>
 using namespace std;
 using namespace cv;
-// applying watershed algorithm for image segmentation
+// the following code for watershed algorithm is taken from http://docs.opencv.org/trunk/d2/dbd/tutorial_distance_transform.html#gsc.tab=0
+// after line 121 a little extra code is appended as per our needs
 int main()
 {
     // Load the image
@@ -128,20 +129,20 @@ int main()
         }
     }
     vector<vector<Point> > contours2;
-
-
+    
+    //in line 83 contours were found in the image and we can use them to find centroid
     //findContours( dst, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
     vector<Moments> mu(contours.size() );
     for( int i = 0; i < contours.size(); i++ )
     {
-         mu[i] = moments( contours[i], false );
+         mu[i] = moments( contours[i], false );                   //
     }
     vector<Point2f> mc( contours.size() );
     for( int i = 0; i < contours.size(); i++ )
     {
         mc[i] = Point2f( mu[i].m10/mu[i].m00 , mu[i].m01/mu[i].m00 );
     }
-    bitwise_and(orig,dst,dst);
+    bitwise_and(orig,dst,dst);                                      // mask is superimposed on original image
     for(int i=0;i<mc.size();i++)
     {
 
