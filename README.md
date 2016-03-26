@@ -3,6 +3,7 @@
 faces_trained.xml- It contains trained xml files for faces - label=0 is for ellen degeneres' face else label=1;
 
 facerec_fisherfaces.cpp- In line 55 address of csv file for faces data is given which then trains the model and saves it as faces_trained.xml
+
 line 55:
 string fn_csv = string("C:/Users/MRIDUL/Desktop/fossee/task1/faces.csv");
 here change the address to your csv file and generate your own trained data.
